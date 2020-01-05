@@ -4,11 +4,12 @@ LABEL mantainer="ing.norville@gmail.com"
 
 # Install packages
 RUN apk update && apk upgrade && apk add \
+        bash \
         vim \
         wget \
         curl \
         sudo \
-        python \
+        python3 \
         openssh
 
 # Add default user
