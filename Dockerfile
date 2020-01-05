@@ -16,7 +16,7 @@ RUN apk update && apk upgrade && apk add \
 ENV DEF_USER dummy
 RUN adduser -D -g "" -s /bin/bash ${DEF_USER} && \
 # Add default user to sudo group
-    adduser ${DEF_USER} sudo && \
+#    adduser ${DEF_USER} sudo && \
 # Disable password for sudo group
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
