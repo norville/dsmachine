@@ -9,18 +9,18 @@ RUN apk update && apk upgrade && apk add bash wget && \
 # Add default user
 ENV DEF_USER dummy
 RUN adduser -D -g "" ${DEF_USER}
+USER ${DEF_USER}
 
 # Configure user env
-USER ${DEF_USER}
 ENV DEF_WDIR /home/${DEF_USER}/dev
-WORKDIR ${DEF_WDIR}/
-RUN chmod 777 ${DEF_WDIR}/
+RUN mkdir -p ${DEF_WDIR} && chmod 777 ${DEF_WDIR}
+WORKDIR ${DEF_WDIR}
 
 # Install Anaconda
 ENV ANA_VER 2019.10
 RUN wget https://repo.anaconda.com/archive/Anaconda3-${ANA_VER}-Linux-x86_64.sh && \
-    bash Anaconda3-${ANA_VER}-Linux-x86_64.sh && \
-    rm Anaconda3-${ANA_VER}-Linux-x86_64.sh
+    bash Anaconda3-${ANA_VER}-Linux-x86_64.sh -b && \
+    rm -f Anaconda3-${ANA_VER}-Linux-x86_64.sh
 # Add conda to shell path
 ENV PATH ${DEF_WDIR}/anaconda3/bin:$PATH
 # Update anaconda
