@@ -10,6 +10,7 @@ RUN apk update && apk upgrade && apk add \
         curl \
         sudo \
         python3 \
+        openrc \
         openssh
 
 # Add default user
