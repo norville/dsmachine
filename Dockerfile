@@ -42,9 +42,8 @@ RUN conda update conda && conda update anaconda && conda update --all
 RUN mkdir -p $DEF_WDIR/notebooks && \
     jupyter notebook --generate-config --allow-root
 
-#VOLUME /home/dummy/dev
-
 # Open ssh and jupyter ports
-EXPOSE 22 8888
+EXPOSE 22
+EXPOSE 8888
 
 CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=/home/ubuntu/notebooks", "--ip='*'", "--port=8888", "--no-browser"]
