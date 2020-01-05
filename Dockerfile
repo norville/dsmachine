@@ -3,26 +3,12 @@ FROM alpine:latest
 LABEL mantainer="ing.norville@gmail.com"
 
 # Install packages
-RUN apk update && apk upgrade && apk add \
-        bash \
-        vim \
-        wget \
-        curl \
-        sudo \
-        python3 \
-        openrc \
-        openssh
+RUN apk update && apk upgrade && apk add bash wget && \
+    rm -rf /tmp/* /var/cache/apk/*
 
 # Add default user
 ENV DEF_USER dummy
-RUN adduser -D -g "" -s /bin/bash ${DEF_USER} && \
-# Add default user to sudo group
-#    adduser ${DEF_USER} sudo && \
-# Disable password for sudo group
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# Enable sshd
-RUN rc-update add sshd && /etc/init.d/sshd start
+RUN adduser -D -g "" ${DEF_USER}
 
 # Configure user env
 USER ${DEF_USER}
@@ -45,7 +31,6 @@ RUN mkdir -p ${DEF_WDIR}/notebooks && \
     jupyter notebook --generate-config --allow-root
 
 # Open ssh and jupyter ports
-EXPOSE 22
 EXPOSE 8888
 
 CMD ["jupyter", "notebook", "--allow-root", "--notebook-dir=${DEF_WDIR}/notebooks", "--ip='*'", "--port=8888", "--no-browser"]
